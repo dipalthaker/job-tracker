@@ -1,0 +1,24 @@
+# macOS
+.DS_Store
+
+# python / backend
+backend/.venv/
+backend/__pycache__/
+**/__pycache__/
+*.pyc
+backend/.env
+backend/*.sqlite3
+backend/.mypy_cache/
+backend/.ruff_cache/
+
+# node / frontend
+frontend/node_modules/
+frontend/dist/
+*.log
+
+# misc
+.env
+*.sqlite
+*.db
+*.sql
+*.csv
