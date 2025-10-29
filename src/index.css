@@ -1,0 +1,22 @@
+html, body, #root { height: 100%; }
+body { background: #f6f7fb; }
+
+/* Cards / sections */
+.card-soft { border-radius: 16px; box-shadow: 0 12px 24px -16px rgba(16,24,40,.2); }
+.section { background: #fff; border: 1px solid #eef0f4; border-radius: 16px; }
+
+/* Headings */
+.page-title { font-weight: 700; letter-spacing: -.02em; }
+
+/* Table polish */
+.table thead th { background: #f8f9fb; color: #4b5563; font-weight: 600; }
+.table tbody tr:hover { background: #fafbff; }
+
+/* Status pills (match your backend statuses) */
+.status-pill { font-weight: 600; font-size: .78rem; padding:.35rem .6rem; border-radius: 999px; }
+.status-APPLIED   { background:#e8f1ff; color:#175cd3; }
+.status-OA        { background:#fff3e6; color:#b54708; }
+.status-INTERVIEW { background:#e7f8ef; color:#0a7a45; }
+.status-ONSITE    { background:#f0f9ff; color:#026aa2; }
+.status-OFFER     { background:#ecfdf3; color:#027a48; }
+.status-REJECTED  { background:#fdecec; color:#b42318; }
