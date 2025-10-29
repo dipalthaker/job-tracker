@@ -1,123 +1,157 @@
-🧠 Job Tracker
+<h1 align="center">💼 Job Tracker</h1>
 
-A lightweight job application tracker built with FastAPI, React (Vite), and PostgreSQL.
+<p align="center" style="font-size:18px;">
+A full-stack web application to organize, track, and analyze job applications.<br>
+Built with <b>FastAPI</b> · <b>React (Vite)</b> · <b>PostgreSQL</b>
+</p>
 
+<p align="center">
+  <img src="https://img.shields.io/badge/FastAPI-Backend-brightgreen" />
+  <img src="https://img.shields.io/badge/React-Frontend-blue" />
+  <img src="https://img.shields.io/badge/PostgreSQL-Database-lightblue" />
+  <img src="https://img.shields.io/badge/Alembic-Migrations-yellow" />
+  <img src="https://img.shields.io/badge/Deployed%20Ready-Render%20|%20Vercel%20|%20Neon-orange" />
+</p>
 
+---
 
+<h2>🧭 Overview</h2>
 
+<p style="font-size:16px;">
+Searching and applying for jobs can get chaotic — this project simplifies that.<br>
+The <b>Job Tracker</b> helps users manage their applications across stages such as 
+“Applied”, “Interviewing”, “Offer”, or “Rejected”, all in one centralized dashboard.
+</p>
 
+✨ **Key Highlights**
+- ✅ Create, update, and delete job applications  
+- 🔐 JWT-based user authentication  
+- 🧩 RESTful FastAPI backend  
+- 💾 PostgreSQL database with Alembic migrations  
+- ⚛️ React frontend built with Vite for a fast and modern UI  
+- 🌐 Secure cross-origin (CORS) integration between frontend and backend  
+- 🧠 Clear modular architecture and environment-based configuration  
 
+---
 
+<h2>🧰 Tech Stack</h2>
 
-📋 Overview
+| Layer | Technology |
+|-------|-------------|
+| **Frontend** | React (Vite), Axios, React Router, TailwindCSS |
+| **Backend** | FastAPI, SQLAlchemy ORM, Alembic, JWT Auth, Pydantic |
+| **Database** | PostgreSQL (Neon or local), Async CRUD operations |
+| **Infra / DevOps** | Docker-ready, Render (API), Vercel (Frontend) |
 
-Job Tracker helps users manage and monitor their job applications efficiently.
-It combines a FastAPI backend, a React/Vite frontend, and a PostgreSQL database (via Docker) into one clean, modular system.
+---
 
-✨ Features
+<h2>🧱 System Architecture</h2>
 
-Track job applications, stages, notes, and reminders
+```
+┌────────────────────┐       ┌────────────────────┐
+│     React UI       │ <---> │    FastAPI API     │ <---> PostgreSQL (Neon)
+│  (Frontend, Vite)  │       │ (Backend + Auth)   │
+└────────────────────┘       └────────────────────┘
+```
 
-REST API with JWT-based authentication
+---
 
-Modern, responsive React UI
+<h2>⚙️ Local Setup</h2>
 
-PostgreSQL database with SQLAlchemy ORM
+<h3>1️⃣ Clone the Repository</h3>
 
-Simple Makefile for setup and maintenance
+```bash
+git clone https://github.com/<your-username>/job-tracker.git
+cd job-tracker
+```
 
-Pre-commit hooks, linting (Ruff), and typing (Mypy)
+<h3>2️⃣ Backend Setup</h3>
 
-⚙️ Tech Stack
-Layer	Technology
-Frontend	React + Vite + TypeScript
-Backend	FastAPI + SQLAlchemy + Pydantic
-Database	PostgreSQL (via Docker)
-Dev Tools	Docker, Makefile, Ruff, Mypy, Pre-commit
-🚀 Local Setup
-1️⃣ Prerequisites
+```bash
+cd backend
+python -m venv venv
+source venv/bin/activate  # (Windows: venv\Scripts\activate)
+pip install -r requirements.txt
+```
 
-Python 3.11+
+Create a `.env` file:
 
-Node.js 18+
-
-Docker Desktop (for PostgreSQL)
-
-2️⃣ Start PostgreSQL (Docker)
-
-Run the container:
-
-docker run --name jt-pg \
-  -e POSTGRES_PASSWORD=postgres \
-  -e POSTGRES_USER=postgres \
-  -e POSTGRES_DB=jobtracker \
-  -p 5433:5432 -d postgres:16
-
-
-Your database is now accessible at
-postgresql://postgres:postgres@localhost:5433/jobtracker
-
-3️⃣ Backend Setup
-
-From the repo root:
-
-make venv
-make install
-
-
-Create a file: backend/.env
-
-DATABASE_URL=postgresql+psycopg2://postgres:postgres@localhost:5433/jobtracker
-JWT_SECRET=dev_secret_change_me
+```bash
+DATABASE_URL=postgresql+psycopg2://USER:PASSWORD@HOST:PORT/DB?sslmode=require
+JWT_SECRET=your_secret_key
 JWT_EXPIRE_MINUTES=10080
 ALLOWED_ORIGINS=http://localhost:5173
-LOG_LEVEL=info
+```
 
+Run Alembic migrations:
 
-Run migrations to create tables:
+```bash
+alembic upgrade head
+```
 
-make migrate
+Start the backend:
 
+```bash
+uvicorn app.main:app --reload
+```
 
-Run the backend:
+Backend API docs 👉 [http://localhost:8000/docs](http://localhost:8000/docs)
 
-make run-api
+---
 
+<h3>3️⃣ Frontend Setup</h3>
 
-Server runs at http://127.0.0.1:8000/docs
-
-4️⃣ Frontend Setup
-
-In a new terminal:
-
-cd frontend
+```bash
+cd ../frontend
 npm install
 npm run dev
+```
 
+Create `.env.local` file:
 
-Opens http://localhost:5173
+```bash
+VITE_API_URL=http://localhost:8000
+```
 
-🧹 Developer Commands
-Command	Description
-make venv	Create a Python virtual environment
-make install	Install backend dependencies
-make migrate	Apply database migrations
-make reset-db	Drop and recreate all tables
-make run-api	Start FastAPI backend
-make lint-py	Run Ruff & Mypy checks
-pre-commit run --all-files	Run all format and lint checks
-🌍 Deployment (Optional)
+Run frontend at 👉 [http://localhost:5173](http://localhost:5173)
 
-To deploy publicly:
+---
 
-Host the backend on Render
+<h2>🧪 API Endpoints</h2>
 
-Use Neon
- or Supabase
- for Postgres
+| Method | Endpoint | Description |
+|---------|-----------|-------------|
+| `POST` | `/auth/register` | Register a new user |
+| `POST` | `/auth/login` | User login (JWT token issued) |
+| `GET` | `/jobs/` | Fetch all jobs for current user |
+| `POST` | `/jobs/` | Add a new job entry |
+| `PUT` | `/jobs/{id}` | Update existing job |
+| `DELETE` | `/jobs/{id}` | Delete a job |
 
-Deploy the frontend on Vercel
+---
 
-📄 License
+<h2>🧠 Learning Highlights</h2>
 
-MIT License © 2025 Dipal Thaker
+- Building a full-stack CRUD app with user authentication  
+- Designing scalable REST APIs with FastAPI  
+- Managing database schema migrations via Alembic  
+- Integrating frontend & backend using environment configs  
+- Understanding deployment pipelines and CI/CD workflows  
+- Applying clean architecture principles and modularity  
+
+---
+
+<h2>📜 License</h2>
+
+MIT License © 2025 **Dipal Thaker**
+
+---
+
+<h2>👩‍💻 Author</h2>
+
+<p align="center" style="font-size:16px;">
+<b>Dipal Thaker</b><br>
+🎓 Master’s Student, Information Management @ University of Illinois Urbana-Champaign<br>
+🔗 <a href="https://linkedin.com/in/dipalthaker2">LinkedIn</a> · 
+<a href="https://github.com/dipalthaker">GitHub</a>
+</p>
